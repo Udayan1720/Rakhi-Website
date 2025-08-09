@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Happy Raksha Bandhan — Shambhavi</title>
+<style>
+  :root{--pink:#d6336c;--accent:#ff8ba7;--bg1:#fff0f5}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;background:linear-gradient(180deg,#fff0f5,#fff8f9);color:#2b1222;min-height:100vh}
+  /* protect page: redirect to password if not unlocked */
+  .locked-msg{display:none;padding:40px;text-align:center}
+  header{padding:60px 20px;text-align:center;position:relative;overflow:hidden}
+  header .hero{max-width:1100px;margin:0 auto;display:flex;gap:30px;align-items:center;justify-content:center}
+  .hero-left{flex:1;text-align:left}
+  .hero-right{width:420px;flex-shrink:0}
+  h1{font-size:48px;margin:0 0 12px;line-height:1.02;animation:glow 2.5s ease-in-out infinite alternate;}
+  h2{color:var(--pink);margin:0;font-size:20px}
+  p.lead{font-size:18px;color:#6b3a4a;margin-top:12px;opacity:0.95}
+  .cta{margin-top:28px;display:flex;gap:16px}
+  .btn{background:linear-gradient(90deg,var(--pink),var(--accent));color:white;padding:14px 24px;border-radius:14px;border:none;font-weight:800;cursor:pointer;box-shadow:0 12px 30px rgba(214,51,108,0.15);transform:translateY(0);transition:transform .18s ease,box-shadow .18s}
+  .btn:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(214,51,108,0.22)}
+  .photo-frame{background:linear-gradient(180deg,#fff,#fff3f6);padding:14px;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center}
+  .photo-frame img{width:100%;height:auto;border-radius:12px;display:block}
+  /* Animated floating badges */
+  .badge{position:absolute;right:40px;top:18px;background:linear-gradient(90deg,#fff,#fff6f9);padding:10px 14px;border-radius:14px;border:3px solid rgba(255,200,220,0.4);box-shadow:0 12px 30px rgba(214,51,108,0.08);font-weight:800}
+  .floating{animation:floatY 5s ease-in-out infinite}
+  @keyframes floatY{0%{transform:translateY(0)}50%{transform:translateY(-14px)}100%{transform:translateY(0)}}
+  /* entrance animations */
+  .fadeInUp{animation:fadeUp .9s ease-out both}
+  @keyframes fadeUp{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:translateY(0)}}
+  @keyframes glow{0%{text-shadow:0 6px 18px rgba(214,51,108,0.06)}100%{text-shadow:0 22px 48px rgba(214,51,108,0.16)}}
+  /* footer */
+  footer{padding:30px 20px;text-align:center;color:#8a6a7a}
+  /* responsive */
+  @media(max-width:880px){ .hero{flex-direction:column}.hero-right{width:280px} h1{font-size:34px} }
+</style>
+</head>
+<body>
+<script>
+    // protect: if not unlocked, redirect to password page
+    try{
+      if(!localStorage.getItem('rakhisunlocked')){ window.location.href = 'index.html'; }
+    }catch(e){}
+  </script>
+<header>
+<div class="hero">
+<div class="hero-left fadeInUp">
+<h1>Happy Raksha Bandhan, <span style="color:var(--pink)">Shambhavi</span> 🎊</h1>
+<h2>My sister by heart</h2>
+<p class="lead">You make every memory sweeter — childhood mischiefs, secret jokes, endless support. Today is for you.</p>
+<div class="cta">
+<a class="btn" href="gallery.html">📸 Gallery</a>
+<a class="btn" href="message.html">💌 Message</a>
+</div>
+</div>
+<div class="hero-right fadeInUp" style="animation-delay:.15s">
+<div class="photo-frame floating" style="width:420px;height:420px;display:flex;align-items:center;justify-content:center">
+<img alt="Shambhavi photo" src="photo6.jpg"/>
+</div>
+</div>
+</div>
+<div class="badge floating" style="left:28px;top:22px">Made with ❤️ — Udayan</div>
+</header>
+<main style="padding:40px 20px">
+<section style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center">
+<div class="fadeInUp">
+<div style="background:linear-gradient(180deg,#fff,#fff6f9);padding:22px;border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,0.06)">
+<h3 style="margin:0;color:var(--pink)">Why you’re special</h3>
+<p style="margin-top:12px;color:#6b3a4a">You laugh loudly, you hug tightly, you push me to do better — and you do it all with a smile. Thank you for being you.</p>
+</div>
+</div>
+<div class="fadeInUp" style="animation-delay:.12s">
+<div style="border-radius:16px;overflow:hidden;box-shadow:0 18px 50px rgba(214,51,108,0.06)">
+<img alt="Shambhavi 2" src="photo2.jpg" style="width:100%;display:block"/>
+</div>
+</div>
+</section>
+</main>
+<footer>
+<div style="opacity:0.9">Wishing you giggles, sweets, and a forever bond — Happy Rakhi 💫</div>
+</footer>
+<!-- small confetti burst when opening -->
+<canvas id="c" style="position:fixed;inset:0;pointer-events:none"></canvas>
+<script>
+    // small confetti implementation
+    (function(){
+      const canvas = document.getElementById('c');
+      const ctx = canvas.getContext('2d');
+      let W, H; function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+      resize(); addEventListener('resize', resize);
+      let pieces = [];
+      function rand(a,b){return Math.random()*(b-a)+a}
+      function spawn(n){
+        for(let i=0;i<n;i++) pieces.push({x:rand(0,W),y:rand(-H,0),w:rand(6,14),h:rand(6,14),vx:rand(-2,2),vy:rand(2,6),c:['#ff6b81','#ffc857','#ffd1dc','#ff9fb0'][Math.floor(rand(0,4))],ang:rand(0,6.28),va:rand(-0.08,0.08)});
+      }
+      function update(){
+        ctx.clearRect(0,0,W,H);
+        for(let i=pieces.length-1;i>=0;i--){
+          const p = pieces[i];
+          p.x+=p.vx; p.y+=p.vy; p.vy+=0.06; p.ang+=p.va;
+          ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.ang); ctx.fillStyle=p.c; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); ctx.restore();
+          if(p.y>H+50) pieces.splice(i,1);
+        }
+        requestAnimationFrame(update);
+      }
+      spawn(80);
+      update();
+    })();
+  </script>
+</body>
+</html>

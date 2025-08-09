@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Unlock — Rakhi Surprise</title>
+<style>
+  :root{--pink:#d6336c;--pink2:#ff8ba7;--bg:#fff0f5}
+  *{box-sizing:border-box}
+  body{margin:0;height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fff0f5,#ffeef0);font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
+  .card{width:min(740px,94vw);background:linear-gradient(180deg,#fff,#fff6f9);padding:34px;border-radius:18px;box-shadow:0 30px 70px rgba(214,51,108,0.12);text-align:center;position:relative;overflow:hidden}
+  h1{margin:0;font-size:30px;color:var(--pink);animation:pop 1.2s ease}
+  p.lead{color:#7b3b4b;margin-top:10px;font-size:16px}
+  .input{margin-top:22px;display:flex;gap:10px;justify-content:center}
+  input[type="password"]{padding:12px 16px;border-radius:12px;border:2px solid rgba(214,51,108,0.16);width:260px;font-size:16px;outline:none;transition:transform .18s ease,box-shadow .18s}
+  input[type="password"]:focus{transform:scale(1.03);box-shadow:0 8px 30px rgba(214,51,108,0.12)}
+  button.unlock{background:linear-gradient(90deg,var(--pink),var(--pink2));border:none;color:#fff;padding:12px 18px;border-radius:12px;font-weight:700;cursor:pointer;box-shadow:0 12px 30px rgba(214,51,108,0.18);transition:transform .12s ease}
+  button.unlock:active{transform:translateY(2px)}
+  .hints{margin-top:18px;color:#6b3944;font-size:14px}
+  .hint2{color:var(--pink);font-weight:700;margin-top:6px}
+  .small{position:absolute;right:18px;top:18px;color:rgba(214,51,108,0.12);font-weight:800;font-size:44px;transform:rotate(-12deg)}
+  @keyframes pop{0%{transform:scale(.9);opacity:0}100%{transform:scale(1);opacity:1}}
+  /* floating rakhis */
+  .r1,.r2{position:absolute;width:110px;opacity:.95}
+  .r1{left:-12px;top:-12px;transform:rotate(-12deg);animation:float1 6s ease-in-out infinite}
+  .r2{right:-6px;bottom:-24px;transform:rotate(8deg);animation:float2 7s ease-in-out infinite}
+  @keyframes float1{0%{transform:translateY(0) rotate(-12deg)}50%{transform:translateY(-12px) rotate(-8deg)}100%{transform:translateY(0) rotate(-12deg)}}
+  @keyframes float2{0%{transform:translateY(0) rotate(8deg)}50%{transform:translateY(-14px) rotate(12deg)}100%{transform:translateY(0) rotate(8deg)}}
+</style>
+</head>
+<body>
+  <div class="card" role="main" aria-labelledby="title">
+    <div class="small">♥</div>
+    <h1 id="title">Shh... It's a Surprise for Shambhavi 💖</h1>
+    <p class="lead">Enter the secret password to open your Raksha Bandhan surprise.</p>
+
+    <div class="input">
+      <input id="pwd" type="password" placeholder="Enter password" aria-label="password" />
+      <button class="unlock" id="unlockBtn">Unlock</button>
+    </div>
+
+    <div class="hints">
+      <div>Hint: <strong>Your favourite person</strong></div>
+      <div class="hint2">Enter Only the first name with the initial capitals.</div>
+    </div>
+
+    <!-- decorative rakhis -->
+    <svg class="r1" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="36" fill="#fff" stroke="#ffd1dc" stroke-width="6"/>
+      <g transform="translate(60 60)">
+        <circle r="26" fill="#ffefef" stroke="#ffb0c0" stroke-width="4"/>
+        <circle r="8" fill="#ff6b81"/>
+      </g>
+    </svg>
+    <svg class="r2" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="80" cy="80" r="48" fill="#fff" stroke="#ffd1dc" stroke-width="8"/>
+      <g transform="translate(80 80)">
+        <circle r="34" fill="#fff2f4" stroke="#ffb0c0" stroke-width="5"/>
+        <circle r="10" fill="#ff6b81"/>
+      </g>
+    </svg>
+
+  </div>
+
+<script>
+  const unlockBtn = document.getElementById('unlockBtn');
+  const pwdInput = document.getElementById('pwd');
+  function showError(){
+    pwdInput.style.borderColor = 'rgba(220,20,60,0.6)';
+    setTimeout(()=>{pwdInput.style.borderColor='';},900);
+  }
+  unlockBtn.addEventListener('click', ()=>{
+    const v = pwdInput.value.trim();
+    if(v === 'Udayan'){
+      // mark unlocked and go to main page
+      try{ localStorage.setItem('rakhisunlocked','1'); }catch(e){}
+      window.location.href = 'homepage.html';
+    } else {
+      alert('Incorrect password — try again!');
+      showError();
+      pwdInput.focus();
+    }
+  });
+  pwdInput.addEventListener('keyup', (e)=>{ if(e.key==='Enter') unlockBtn.click(); });
+</script>
+</body>
+</html>
